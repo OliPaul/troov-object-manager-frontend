@@ -16,6 +16,7 @@ const processLoginForm = async (context: Vue, email: string, password: string): 
   // Store token
   if(userInfo.token) {
     localStorage.setItem("token", userInfo.token);
+    localStorage.setItem("userName", userInfo.name);
   }
   return new User(userInfo.name, userInfo.email);
 }
