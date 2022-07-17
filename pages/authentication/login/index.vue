@@ -26,6 +26,9 @@
             </b-form-group>
 
             <b-button block type="submit" variant="primary">Connexion</b-button>
+            <div align="center">
+              <NuxtLink to="/authentication/register">Je n'ai pas de compte</NuxtLink>
+            </div>
           </b-form>
         </b-card>
       </b-col>
