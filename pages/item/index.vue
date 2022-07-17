@@ -42,35 +42,38 @@
               <b-button size="sm" @click="showUpdateModal(row.item, row.index, $event.target)" class="mr-1">
                 Modifier
               </b-button>
+              <b-button size="sm" variant="danger" @click="onDelete(row.item, row.index, $event.target)" class="mr-1">
+                Supprimer
+              </b-button>
             </template>
           </b-table>
+          <b-modal :id="infoModal.id" :title="infoModal.title" hide-footer>
+            <b-form @submit="onUpdate($event, )">
+              <b-form-group>
+                <b-form-input
+                  id="input-1"
+                  v-model="infoModal.form.itemName"
+                  type="text"
+                  placeholder="nom de l'objet"
+                ></b-form-input>
+              </b-form-group>
+
+              <b-form-group>
+                <b-form-textarea
+                  id="input-2"
+                  rows="5"
+                  max-rows="5"
+                  v-model="infoModal.form.itemDescription"
+                  placeholder="description de l'objet"
+                ></b-form-textarea>
+              </b-form-group>
+
+              <b-button block type="submit" variant="primary">Mettre à jour</b-button>
+            </b-form>
+          </b-modal>
         </b-col>
       </b-row>
     </b-card-body>
-    <b-modal :id="infoModal.id" :title="infoModal.title" hide-footer>
-      <b-form @submit="onUpdate($event, )">
-        <b-form-group>
-          <b-form-input
-            id="input-1"
-            v-model="infoModal.form.itemName"
-            type="text"
-            placeholder="nom de l'objet"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group>
-          <b-form-textarea
-            id="input-2"
-            rows="5"
-            max-rows="5"
-            v-model="infoModal.form.itemDescription"
-            placeholder="description de l'objet"
-          ></b-form-textarea>
-        </b-form-group>
-
-        <b-button block type="submit" variant="primary">Mettre à jour</b-button>
-      </b-form>
-    </b-modal>
   </b-card>
 </template>
 
@@ -78,6 +81,7 @@
 import getItemList from "~/pages/item/GetItemList";
 import createItem from "~/pages/item/CreateItem";
 import updateItem from "~/pages/item/UpdateItem";
+import deleteItem from "~/pages/item/DeleteItem";
 
 export default {
   name: "Item",
@@ -138,6 +142,12 @@ export default {
         this.$root.$emit('bv::hide::modal', this.infoModal.id);
       }
     },
+    async onDelete(item, _index, _button) {
+      const itemId = await deleteItem(this, item.id);
+      if (itemId) {
+        await this.getItems();
+      }
+    }
   }
 }
 </script>
