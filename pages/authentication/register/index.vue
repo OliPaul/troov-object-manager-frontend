@@ -218,6 +218,12 @@ export default {
       },
     };
   },
+  beforeMount() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.$router.push({path: "/item", query: {name: localStorage.getItem("userName")}});
+    }
+  },
   methods: {
     async onSubmit(event) {
       event.preventDefault();
