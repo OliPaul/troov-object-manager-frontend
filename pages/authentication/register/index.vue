@@ -206,6 +206,7 @@
 
 <script>
 import processRegisterForm from "~/pages/authentication/register/Register.ts";
+import AuthenticationUtils from "~/pages/authentication/utils/AuthenticationUtils";
 
 export default {
   name: "Register",
@@ -219,10 +220,7 @@ export default {
     };
   },
   beforeMount() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.$router.push({path: "/item", query: {name: localStorage.getItem("userName")}});
-    }
+    AuthenticationUtils.verifyAuthentication(this);
   },
   methods: {
     async onSubmit(event) {

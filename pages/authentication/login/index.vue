@@ -199,6 +199,7 @@
 
 <script>
 import processLoginForm from "~/pages/authentication/login/Login.ts";
+import AuthenticationUtils from "~/pages/authentication/utils/AuthenticationUtils";
 
 export default {
   name: "Login",
@@ -211,10 +212,7 @@ export default {
     };
   },
   beforeMount() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.$router.push({path: "/item", query: {name: localStorage.getItem("userName")}});
-    }
+    AuthenticationUtils.verifyAuthentication(this);
   },
   methods: {
     async onSubmit(event) {
